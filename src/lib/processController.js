@@ -5,7 +5,7 @@ class processController  {
     constructor(locations_cods=[]) {
         this.locations_cods = [];
         this.nroIteracion = 0;
-        this.timeInterval = 10000;
+        this.timeInterval = process.env.RPLTEST_TIMER_MILISECONDS ||  10000;
 		this.appCallback = ()=>{};
 		this.processResultData = {weatherResponse:[],apiErrors:[]};
 		that = this;

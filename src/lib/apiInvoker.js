@@ -3,7 +3,7 @@ import axios from 'axios'
 let that;
 class apiInvoker  {
     constructor() {
-        this.acountKey = '264f037d720e899ec02431f178da7196';
+        this.acountKey = process.env.DARKSKY_KEY || '264f037d720e899ec02431f178da7196';
         this.api = 'https://api.darksky.net/forecast/'+this.acountKey+'/';
 		that = this;
 		this.callbackMain = ()=>{};
