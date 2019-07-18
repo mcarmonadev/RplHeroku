@@ -11,7 +11,8 @@ class apiInvoker  {
 		this.locations_cods = [];
 		this.weather_results = [];		
 		this.api_erros = [];	
-		this.client = '';//redis.createClient(6379, 'localhost');		
+		this.client = '';//redis.createClient(6379, 'localhost');	
+		this.apiExceededErrorsTimes = 0;	
     }
 
 	getWeather (loc_cods, callback, mock) {
@@ -57,6 +58,7 @@ class apiInvoker  {
 		console.log('launchApiRequests!!!');
 
 		this.weather_results = [];
+		this.apiExceededErrorsTimes = 0;
 		//this.client = redis.createClient(6379, 'localhost');
 		this.locations.map(loc=>{
 		//console.log(loc);
@@ -104,12 +106,12 @@ class apiInvoker  {
 					.catch(
 							error => {console.log('ERROR CON SERVICIO DE DATOS')/*console.log(error)*/
 
-											//if(this.locations_cods.length==this.weather_results.length)
-											//{
-												//this.returnWeatherResults();
-												console.log(error.response.data)
-												this.handleApiErrorAndExit(error.response.data.error)
-											//}
+										console.log(error.response.data)
+										this.apiExceededErrorsTimes++;
+										if(this.locations_cods.length==this.apiExceededErrorsTimes)
+										{
+											this.handleApiErrorAndExit(error.response.data.error)
+										}	
 									}
 						)
 
