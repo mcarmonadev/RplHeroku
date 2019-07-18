@@ -2,8 +2,6 @@ import redis from "redis";
 class dbInitializer  {
 
 	initialite(callback) {
-redis://h:p42b2b8eb23d16abc4e971a3465774150da41568de5641b3c7d11c1c873b80661@ec2-18-215-43-91.compute-1.amazonaws.com:10659
-		//let client = redis.createClient(6379, 'localhost');
 		let client = redis.createClient(process.env.REDIS_URL || 'redis://localhost:6379');
 		console.log('Setting BD Locations.')
 		let locations_cods = ['santiago','zurich','auckland','sydney','londres','georgia'];
