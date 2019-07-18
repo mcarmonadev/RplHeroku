@@ -108,6 +108,7 @@ class apiInvoker  {
 											//{
 												//this.returnWeatherResults();
 												console.log(error.response.data)
+												this.handleApiErrorAndExit(error.response.data.error)
 											//}
 									}
 						)
@@ -134,6 +135,21 @@ class apiInvoker  {
 					//console.log(e.name+' - '+e.message);
 					this.handleApiError(loc, e.message);
 			}	
+	}
+	handleApiErrorAndExit(exceptionMessage) {
+
+		console.log('handleApiErrorAndExit... ')	
+		let mockLocations = [
+							{locName: 'Santiago (CL)',lat: '-33.447487',lot: '-70.673676',time:(new Date().getTime()), temperature:'NO API RESP'},
+							];
+		let llave = (new Date().getTime());
+		let objError = {};objError[llave] = exceptionMessage;
+		let mockErrors = [objError];
+			
+				that.callbackMain(
+						mockLocations, 
+						mockErrors
+					);
 	}
 	launchApiRequest_TryAgain() {
 	}
