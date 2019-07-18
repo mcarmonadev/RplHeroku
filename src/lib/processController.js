@@ -5,6 +5,7 @@ class processController  {
     constructor(locations_cods=[]) {
         this.locations_cods = [];
         this.nroIteracion = 0;
+		this.usuariosConnectados = 0;
         this.timeInterval = process.env.RPLTEST_TIMER_MILISECONDS ||  10000;
 		this.appCallback = ()=>{};
 		this.processResultData = {weatherResponse:[],apiErrors:[]};
@@ -21,7 +22,19 @@ class processController  {
 
 		
 		let mock = false;/*Setear en true para evitar llamadas a la api y asi tener respuesta para depurar el front*/
-		apiInvoker.getWeather(that.locations_cods, that.setNextCall, mock);
+
+		console.log(' ');
+		console.log('usuariosConnectados: ('+that.usuariosConnectados+')');
+		if(that.usuariosConnectados>0){
+			console.log(' ');
+			console.log('Si hay usuarios conectados:Ejecutar logica de API...');
+			apiInvoker.getWeather(that.locations_cods, that.setNextCall, mock);
+		}else{
+			console.log(' ');
+			console.log('No hay usuarios conectados: no invocar api para ahorrar request Skydark...');
+			console.log(' ');
+			that.setNextCall(that.processResultData.weatherResponse, that.processResultData.apiErrors);
+		}
 		/*setTimeout(that.invokeAPI, that.timeInterval);
 		console.log('FIN ----  processInvoker ('+that.nroIteracion+')');
 		console.log(' ');*/
