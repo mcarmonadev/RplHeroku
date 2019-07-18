@@ -6,6 +6,7 @@ import socketIo from 'socket.io';
 import http from 'http';
 
 let processControl = new processController();
+let connectedUsers = 0;
 let ioSocketHook =()=>{console.log('TERMINAMOS');};
 let initCallback = (locations_cods)=>{
 	processControl.startProcess(
@@ -50,6 +51,7 @@ const io = socketIo.listen(httpServer);
 
 io.on("connection", socket => {
   console.log("New client connected");
+  processControl.usuariosConnectados++;
 
 	ioSocketHook =()=>{
 			console.log('TERMINAMOS CON SOCKET');			
@@ -58,6 +60,7 @@ io.on("connection", socket => {
 
   socket.on("disconnect", () => {
     console.log("Client disconnected");
+    processControl.usuariosConnectados--;
   });
 });
 
