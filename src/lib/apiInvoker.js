@@ -153,39 +153,6 @@ class apiInvoker  {
 						mockErrors
 					);
 	}
-	launchApiRequest_TryAgain() {
-	}
-	callWeatherApi() {
-		console.log('callWeatherApi!!!');
-		return;
-		this.weather_results = [];
-		this.locations.map(loc=>{
-			//console.log(loc.lat);
-			let coords = loc.lat+','+loc.lon;
-			//weather_results
-			
-			axios.get(that.api+coords)
-			//axios.get(that.api+'-33.447487,-70.673676')
-					.then(response => {
-						//console.log('API!!!!!! ');
-						var currently = response.data.currently;
-						//console.log(currently);
-						/*let retorno = Object.assign({loc,time:currently.time, currently:currently.temperature});
-						console.log(retorno);*/
-						this.weather_results.push(
-								Object.assign(loc,{time:currently.time, temperature:currently.temperature})
-						);
-
-						if(this.locations_cods.length==this.weather_results.length)
-						{
-							this.returnWeatherResults();
-						}
-						//Object.assign({}, coords);
-						//this.props.dispatch(loadCounters(response.data));
-					})
-					.catch(error => console.log('ERROR CON SERVICIO DE DATOS')/*console.log(error)*/)
-		});
-	}
 	returnWeatherResults() {
 		console.log(' ');
 		//console.log('returnWeatherResults""""" ');
